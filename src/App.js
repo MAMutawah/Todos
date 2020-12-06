@@ -1,23 +1,63 @@
-import logo from './logo.svg';
-import './App.css';
+import "bootstrap/dist/css/bootstrap.css";
+import "./App.css";
+
+import TodoForm from "./Components/TodoForm";
+import Todo from "./Components/Todo";
+
+import React, { useState, useEffect } from "react";
+
+function check(arr, id) {
+  let newArr = [...arr];
+  console.log("before", newArr[id]);
+  newArr[id].isChecked = !newArr[id].isChecked;
+  console.log("After", newArr[id]);
+
+  console.log("New Arr", newArr);
+  return newArr;
+}
 
 function App() {
+  const [todoList, setToDoList] = useState([]);
+
+  useEffect(() => {
+    const data = localStorage.getItem("tier-todo-list");
+    if (data) {
+      setToDoList(JSON.parse(data));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("tier-todo-list", JSON.stringify(todoList));
+  }, [todoList]);
+
+  const addTodo = (todo) => {
+    setToDoList([todo, ...todoList]);
+  };
+
+  const updateTodoToChecked = (todo_id) => {
+    console.log("test");
+    setToDoList(check(todoList, todo_id));
+  };
+
+  const deleteTodo = (todo_id) => {
+    let newArr = [];
+    for (let i = 0; i < todoList.length; i++) {
+      if (i === todo_id) {
+      } else {
+        newArr.push(todoList[i]);
+      }
+    }
+    setToDoList(newArr);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <TodoForm onAdd={addTodo} />
+      <Todo
+        todoList={todoList}
+        checkedTodo={updateTodoToChecked}
+        deleteTodo={deleteTodo}
+      />
     </div>
   );
 }
