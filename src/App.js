@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="container">
       <Router>
-        <Home path="/" />
+        <Home path="/Todos/" />
       </Router>
     </div>
   );
