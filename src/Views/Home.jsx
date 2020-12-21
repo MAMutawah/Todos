@@ -29,12 +29,12 @@ const Home = () => {
 
   const generateId = () => {
     // console.log('yy', todoList[0], todoList.length + 1);
-    let number = todoList[0] ? todoList.length + 1 : 1;
+    let number = todoList.length + 1;
     let found = true;
     while (found) {
       found = false
       for (let i = 0; i < todoList.length; i++) {
-        // console.log('test', todoList[i].id);
+        console.log('test', todoList[i].id);
         if (todoList[i].id === number) {
           found = true;
           number++;
@@ -52,8 +52,8 @@ const Home = () => {
     for (let i = 0; i < arr.length; i++) {
       // console.log(i);
       if (arr[i].id === undefined) {
-        // console.log('No ID', i);
-        arr[i].id = generateId()
+        console.log('No ID', i, generateId());
+        arr[i].id = i + 1;
       }
 
       if (arr[i].createdAt === undefined) {
